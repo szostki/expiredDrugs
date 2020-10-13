@@ -1,0 +1,41 @@
+function emailAlert() {
+
+  var today = new Date();
+
+  // getting data from spreadsheet
+  var sheet = SpreadsheetApp.getActiveSheet();
+  var startRow = 2; // First row of data to process
+  var lastRow = SpreadsheetApp.getActiveSheet().getLastRow();
+  var lastColun = SpreadsheetApp.getActiveSheet().getLastColumn();
+
+  var dataRange = sheet.getRange(startRow, 1, lastRow, lastColun);
+  var data = dataRange.getValues();
+
+  var subject = 'Przeterminowane leki';
+  var message =''  
+  
+  var sendNotifiction = false;
+  
+  for (var i = 0; i < data.length; ++i) 
+  {
+    var row = data[i];
+
+    var expireDate = new Date(row[1]);
+    var expireDateFormat = Utilities.formatDate(
+      new Date(expireDate),
+      'UTC',
+      'MM/dd/yyyy'
+    );
+    
+    if (expireDate <= today)
+    {
+      message += row[0] + '\n' + row[2] + '\n' + expireDateFormat + '\n' + row[3] +'\n' + '-----------' + '\n\n';
+      sendNotifiction = true;
+    }
+  }
+  
+  if (sendNotifiction)
+  {
+    MailApp.sendEmail('szostki@gmail.com', subject, message);
+  }
+}
