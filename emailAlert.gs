@@ -54,6 +54,6 @@ function emailAlert() {
   
   if (sendNotifiction)
   {
-    MailApp.sendEmail({to:'szostki@gmail.com, szostakowska.joanna@gmail.com', subject:subject, htmlBody:html});
+    MailApp.sendEmail({to:'xxxxx@gmail.com, yyy.zzzzz@gmail.com', subject:subject, htmlBody:html});
   }
 }
