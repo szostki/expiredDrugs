@@ -14,6 +14,17 @@ function emailAlert() {
   var subject = 'Przeterminowane leki';
   var message =''  
   
+
+  var html = 
+'<h2>Przeterminowane leki</h2> '+
+'<table>'+
+    '<tr>'+
+    '<th>Nazwa</th>'+
+    '<th>Data</th>'+
+    '<th>Gdzie</th>'+
+    '<th>Inne</th>'+
+  '</tr>';
+  
   var sendNotifiction = false;
   
   for (var i = 0; i < data.length; ++i) 
@@ -29,13 +40,20 @@ function emailAlert() {
     
     if (expireDate <= today)
     {
-      message += row[0] + '\n' + row[2] + '\n' + expireDateFormat + '\n' + row[3] +'\n' + '-----------' + '\n\n';
+      html += '<tr>' +
+        '<td>'+row[0]+ '</td>' + 
+        '<td>'+expireDateFormat+ '</td>' +
+        '<td>'+ row[2] + '</td>' +
+        '<td>' + row[3]+ '</td>' +
+        '</tr>';
       sendNotifiction = true;
     }
   }
   
+  html += '</table>';
+  
   if (sendNotifiction)
   {
-    MailApp.sendEmail('szostki@gmail.com', subject, message);
+    MailApp.sendEmail({to:'szostki@gmail.com, szostakowska.joanna@gmail.com', subject:subject, htmlBody:html});
   }
 }
